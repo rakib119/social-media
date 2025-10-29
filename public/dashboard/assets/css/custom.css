@@ -1,0 +1,19 @@
+.modal-lg{
+    max-width: 100vh !important;
+    max-height: 100vh !important;
+}
+.img-container img {
+    max-width: 100%;
+    height: auto; /* Ensures the image retains its aspect ratio */
+}
+.cropper-preview {
+    text-align: center;
+    overflow: hidden;
+    width: 160px;
+    height: 160px;
+    margin: 10px;
+    border: 1px solid red;
+}
+.note-editor.note-frame.fullscreen {
+    background-color: white;
+}
