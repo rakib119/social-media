@@ -1,3 +1,15 @@
+@php
+    $data = DB::table('genarel_infos')->select('field_name','value')->get();
+    $dataArray = array();
+    foreach ($data as $v) {
+        $dataArray[$v->field_name] = $v->value;
+    }
+    extract($dataArray);
+
+    $logo          = asset('assets/images/info/'.$logo);
+    $favicon       = asset('assets/images/info/'.$favicon);
+    $logo_white    = asset('assets/images/info/'.$logo_white);
+@endphp
 @extends('fontend.layout.layout')
 
 @section('mainContent')
@@ -18,11 +30,16 @@
     <div class="auto-container">
         <div class="banner-one_shadow-layer" style="background-image:url({{asset("assets/images/background/pattern-27.png")}})"></div>
         <div class="row justify-content-center">
-            <div class="col-md-8" style="z-index: 1;">
-                <div class="sec-title centered">
-                    <div class="sec-title_title">{{ __('Confirm Password') }}</div>
-                    <h3 class="sec-title_heading">Please confirm your <br> <span class="theme_color">password</span> before continuing</h3>
+            <div class="col-md-6" style="z-index: 1;">
+                <div class="auth-logo">
+                    <div id="logo">
+                        <a href="{{ route('home')}}"> <img src="{{ $logo }}" alt="{{ $web_title }}"></a>
+                    </div>
                 </div>
+
+                <div class="auth-card p-4">
+                    <h2>Confirm Password</h2>
+                    <p>Please confirm your password before continuing</p>
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
@@ -32,9 +49,9 @@
                         @csrf
 
                         <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+                            <label for="password" class="col-12 col-form-label">{{ __('Password') }}</label>
 
-                            <div class="col-md-6">
+                            <div class="col-12">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
 
                                 @error('password')
@@ -44,13 +61,8 @@
                         </div>
 
                         <div class="row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn-style-three theme-btn btn-item">
-                                    <div class="btn-wrap">
-                                        <span class="text-one">{{ __('Confirm Password') }}</i></span>
-                                        <span class="text-two">{{ __('Confirm Password') }}</i></span>
-                                    </div>
-                                </button>
+                            <div class="col-md-12">
+                                <button type="submit" class="signup-btn mt-3">Confirm Password</button>
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
@@ -59,6 +71,7 @@
                             </div>
                         </div>
                     </form>
+                </div>
             </div>
         </div>
     </div>
