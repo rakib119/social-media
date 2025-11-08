@@ -1,3 +1,16 @@
+@php
+    $data = DB::table('genarel_infos')->select('field_name','value')->get();
+    $dataArray = array();
+    foreach ($data as $v)
+    {
+        $dataArray[$v->field_name] = $v->value;
+    }
+    extract($dataArray);
+
+    $logo          = asset('assets/images/info/'.$logo);
+    $favicon       = asset('assets/images/info/'.$favicon);
+    $logo_white    = asset('assets/images/info/'.$logo_white);
+@endphp
 @extends('fontend.layout.layout')
 
 @section('mainContent')
@@ -18,43 +31,43 @@
     <div class="auto-container">
         <div class="banner-one_shadow-layer" style="background-image:url({{asset("assets/images/background/pattern-27.png")}})"></div>
         <div class="row justify-content-center">
-            <div class="col-md-8" style="z-index: 1;">
-                <div class="sec-title centered">
-                    <div class="sec-title_title">{{ __('Reset Password') }}</div>
-                    {{-- <h3 class="sec-title_heading">Send Reset <span class="theme_color">Password Link </span>    <br> And Set A <br><span class="theme_color">New Password</span></h3> --}}
-                </div>
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+            <div class="col-md-6" style="z-index: 1;">
+                    <div class="auth-logo">
+                        <div id="logo">
+                            <a href="{{ route('home')}}"> <img src="{{ $logo }}" alt="{{ $web_title }}"></a>
                         </div>
-                    @endif
-
-                    <form method="POST" action="{{ route('password.email') }}">
-                        @csrf
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <p class="text-danger">{{ $message }}</p>
-                                @enderror
+                    </div>
+                    <div class="auth-card p-4">
+                        <h2>Reset Password</h2>
+                        <p>Please enter your email address or mobile number and new password to reset your account password.</p>
+                        @if (session('status'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('status') }}
                             </div>
-                        </div>
+                        @endif
 
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn-style-three theme-btn btn-item">
-                                    <div class="btn-wrap">
-                                        <span class="text-one">{{ __('Send Password Reset Link') }}<i class="fas fa-sign-in-alt"></i></span>
-                                        <span class="text-two">{{ __('Send Password Reset Link') }}<i class="fas fa-sign-in-alt"></i></span>
-                                    </div>
-                                </button>
+                        <form method="POST" action="{{ route('password.email') }}">
+                            @csrf
+
+                            <div class="row mb-3">
+                                <label for="email" class="col-12 col-form-label">Email address or Mobile number</label>
+
+                                <div class="col-12">
+                                    <input id="login" type="text" class="form-control @error('login') is-invalid @enderror" name="login" value="{{ old('login') }}" required autofocus>
+
+                                    @error('login')
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
                             </div>
-                        </div>
-                    </form>
+
+                            <div class="row mb-0">
+                                <div class="col-md-12 " style="text-align:center;">
+                                    <button class=" signup-btn mt-3" type="submit">Send Password Reset Link</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
             </div>
         </div>
     </div>

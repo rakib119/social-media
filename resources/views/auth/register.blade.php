@@ -1,241 +1,240 @@
 @extends('fontend.layout.layout')
+@php
+    $data = DB::table('genarel_infos')->select('field_name','value')->get();
+    $dataArray = array();
+    foreach ($data as $v)
+    {
+        $dataArray[$v->field_name] = $v->value;
+    }
+    extract($dataArray);
+
+    $logo          = asset('assets/images/info/'.$logo);
+    $favicon       = asset('assets/images/info/'.$favicon);
+    $logo_white    = asset('assets/images/info/'.$logo_white);
+@endphp
 @section('css')
     {{-- <link rel="stylesheet" href="{{ asset('assets/css/intlTelInput.min.css') }}"> --}}
+    <style>
+
+
+    /* @media (max-width: 767px) {
+        .desktop-only {
+            display: none;
+        }
+        .form-step {
+            display: none;
+        }
+        .form-step.active {
+            display: block;
+        }
+    }
+    @media (min-width: 768px) {
+        .mobile-only {
+            display: none;
+        }
+    } */
+  </style>
 @endsection
 @section('mainContent')
-<!-- Banner One -->
-<section class="banner-one">
-    <div class="bubble-dotted">
-        <span class="dotted dotted-1"></span>
-        <span class="dotted dotted-2"></span>
-        <span class="dotted dotted-3"></span>
-        <span class="dotted dotted-4"></span>
-        <span class="dotted dotted-5"></span>
-        <span class="dotted dotted-6"></span>
-        <span class="dotted dotted-7"></span>
-        <span class="dotted dotted-8"></span>
-        <span class="dotted dotted-9"></span>
-        <span class="dotted dotted-10"></span>
-    </div>
-    <div class="auto-container">
-        <div class="banner-one_shadow-layer" style="background-image:url({{asset("assets/images/background/pattern-27.png")}})"></div>
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-8" style="z-index: 1;">
-                    <div class="sec-title centered">
-                        <div class="sec-title_title">Register</div>
-                        <h3 class="sec-title_heading">Passionate Personalities, <br> <span class="theme_color">Versatile</span> Brains</h3>
+    <section class="banner-one">
+        <div class="bubble-dotted">
+            <span class="dotted dotted-1"></span>
+            <span class="dotted dotted-2"></span>
+            <span class="dotted dotted-3"></span>
+            <span class="dotted dotted-4"></span>
+            <span class="dotted dotted-5"></span>
+            <span class="dotted dotted-6"></span>
+            <span class="dotted dotted-7"></span>
+            <span class="dotted dotted-8"></span>
+            <span class="dotted dotted-9"></span>
+            <span class="dotted dotted-10"></span>
+        </div>
+        <div class="auto-container">
+            <div class="banner-one_shadow-layer" style="background-image:url({{asset("assets/images/background/pattern-27.png")}})"></div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="auth-logo">
+                        <div id="logo">
+                            <a href="{{ route('home')}}"> <img src="{{ $logo }}" alt="{{ $web_title }}"></a>
+                        </div>
                     </div>
-                    <div>
-                        <form method="POST" action="{{ route('register') }}">
-                            @csrf
-                            <div class="row mb-3">
-                                <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" placeholder="Mr. XXXXX" autofocus>
-
-                                    @error('name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            {{-- EMAIL --}}
-                            <div class="row ">
-                                <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="example@gmail.com">
-                                        <div class="input-group-append">
-                                            <button onclick="validateEmail()" id="otp-email-sending-btn" class="otp-style-btn theme-btn btn-item" type="button"> <span id="otp-email-sending-btn-html">Send Otp</span>
-                                            </button>
-                                        </div>
+                    <div class="col-md-6" style="z-index: 1;">
+                        <div class="auth-card p-4">
+                            <h2>Create a new account</h2>
+                            <p>It's quick and easy.</p>
+                            <hr>
+                            <form method="POST" action="{{ route('verify.otp') }}" class="desktop-only position-relative" id="signupForm" novalidate>
+                                @csrf
+                                <div class="row g-2">
+                                    <div class="col-6 position-relative">
+                                        <input type="text" class="form-control" id="firstName" name="first_name" placeholder="First name" required data-msg="What's your name?">
+                                        @error('first_name')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
                                     </div>
-                                    <p id="otp-sending-message"></p>
-                                    @error('email')
-                                        <p class="text-danger"> {{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="row mb-3 d-none" id="email_verification_box" >
-                                <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Verify Otp') }}</label>
-
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        <input id="email-otp" type="text" class="form-control @error('email_otp') is-invalid @enderror" name="email_otp" placeholder="Enter Otp">
-                                        <div class="input-group-append">
-                                            <button class="otp-style-btn theme-btn btn-item" onclick="validateEmailOtp()" type="button" id="verifyBtn"><span>Confirm</span></button>
-                                        </div>
+                                    <div class="col-6 position-relative">
+                                        <input type="text" class="form-control" id="surname" placeholder="Surname" required data-msg="What's your surname?" name="surname">
+                                        @error('surname')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
                                     </div>
-                                    <p id="email_otp_error"></p>
                                 </div>
-                            </div>
-                            {{-- Phone Number --}}
-                            <div class="row " id="phnNmbrContainer">
-                                <label for="phone" class="col-md-4 col-form-label text-md-end">{{ __('Phone Number') }}</label>
 
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone" placeholder="01*********">
-                                        <div class="input-group-append">
-                                            <button onclick="validateMobileNumber()" id="otp-phone-sending-btn" class="otp-style-btn theme-btn btn-item" type="button"> <span id="otp-phone-sending-btn-html">Send Otp</span>
-                                            </button>
-                                        </div>
+                                <label class="col-form-label mt-3 mb-1">Date Of Birth</label>
+                                <div class="row g-2">
+                                    <div class="col-4 position-relative">
+                                        <select class="form-select" id="day" required data-msg="Select day" name="day">
+                                            <option value="">Day</option>
+                                        </select>
                                     </div>
-                                    <p id="phone-otp-sending-message"></p>
-                                    <p class="my-2 text-danger" id="valid-msg"></p>
-                                    <p class="my-2 text-danger" id="error-msg"></p>
-                                    @error('phone')
-                                        <p class="text-danger">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="row mb-3 d-none" id="phone_verification_box" >
-                                <label for="phone" class="col-md-4 col-form-label text-md-end">{{ __('Verify Otp') }}</label>
-
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        <input id="phone-otp" type="text" class="form-control @error('phone_otp') is-invalid @enderror" name="phone_otp" placeholder="Enter Otp">
-                                        <div class="input-group-append">
-                                            <button class="otp-style-btn theme-btn btn-item" onclick="validateMobileOtp()" type="button" id="verifyBtn"><span>Confirm</span></button>
-                                        </div>
+                                    <div class="col-4 position-relative">
+                                        <select class="form-select" id="month" name="month" required data-msg="Select month">
+                                            <option value="">Month</option>
+                                        </select>
                                     </div>
-                                    <p id="phone_otp_error"></p>
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                                <div class="col-md-6">
-                                    <div class="mb-2 d-flex">
-                                        <input id="newPassword" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="Enter password">
-                                        <i class="fas fa-eye-slash" id="NewTogglePassword" style="margin:auto -30px; cursor: pointer;"></i></i>
+                                    <div class="col-4 position-relative">
+                                        <select class="form-select" id="year" name="year" required data-msg="Select year">
+                                            <option value="">Year</option>
+                                        </select>
                                     </div>
-                                    <span class="my-2 text-danger " id="newPasswordError"></span>
-                                    @error('password')
-                                        <p class="text-danger">{{ $message }}</p>
-                                    @enderror
                                 </div>
-                            </div>
 
-                            <div class="row mb-3">
-                                <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
-
-                                <div class="col-md-6">
-                                    <div class="mb-2 d-flex">
-                                        <input id="confirmPassword" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password" placeholder="Confirm password">
-                                        <i class="fas fa-eye-slash" id="confirmTogglePassword" style="margin:auto -30px; cursor: pointer;"></i></i>
-                                    </div>
-                                    <span class="my-2 text-danger " id="confirmPasswordError"></span>
+                                <label class="col-form-label mt-3 mb-1">Gender</label>
+                                <div class="d-flex gap-2 position-relative" id="genderGroup">
+                                    <label class="gender-option flex-fill"><span>Male</span>
+                                        <input type="radio" name="gender" value="male" required data-msg="Select gender">
+                                    </label>
+                                    <label class="gender-option flex-fill"><span>Female</span>
+                                        <input type="radio" name="gender" value="female" required data-msg="Select gender">
+                                    </label>
+                                    <label class="gender-option flex-fill"><span>Other</span>
+                                        <input type="radio" name="gender" value="custom" required data-msg="Select gender">
+                                    </label>
                                 </div>
-                            </div>
 
-                            <div class="row mb-0 d-none" id="submitBtnContainer">
-                                <div class="col-md-6 offset-md-4">
-                                    <input name="country" type="hidden" id="address-country">
-                                    <input name="country_code" type="hidden" value="{{old('country_code')}}" id="country-code">
-                                    <input name="dial_code" type="hidden" value="{{old('dial_code')}}" id="dial-code">
-                                    <button type="submit" class="btn-style-three theme-btn btn-item">
-                                        <div class="btn-wrap">
-                                            <span class="text-one">Register<i class="fas fa-sign-in-alt"></i></span>
-                                            <span class="text-two">Register<i class="fas fa-sign-in-alt"></i></span>
-                                        </div>
-								    </button>
+                                <div class="position-relative">
+                                    <input type="text" class="form-control mt-3" id="contact" placeholder="Mobile number or email address" name="email_or_mobile" required data-msg="Enter a valid mobile or email">
                                 </div>
-                            </div>
-                        </form>
+
+                                <div class="position-relative">
+                                    <input type="password" class="form-control mt-3" id="password" name="password" placeholder="New password" required minlength="6" data-msg="Enter at least 6 characters">
+                                </div>
+
+                                <p class="info-text">By clicking Sign Up, you agree to our Terms, Privacy Policy and Cookies Policy. You may receive SMS notifications from us and can opt out at any time.</p>
+                                <button class=" signup-btn mt-3" type="submit">
+                                    Sign Up
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 @endsection
 
 @section('javaScricpt')
-    <script src="{{asset('assets/js/otpValidation.js')}}"></script>
-    {{-- <script src="{{ asset('assets/js/intlTelInput.min.js') }}"></script>
     <script>
-        var countryData = window.intlTelInputGlobals.getCountryData(),
-        input = document.querySelector("#phone"),
-        errorMsg = document.querySelector("#error-msg"),
-        validMsg = document.querySelector("#valid-msg"),
-        countryInput = document.querySelector("#address-country");
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.getElementById('signupForm');
+            const daySel = document.getElementById('day');
+            const monthSel = document.getElementById('month');
+            const yearSel = document.getElementById('year');
 
-        // here, the index maps to the error code returned from getValidationError - see readme
-        var errorMap = ["Invalid number", "Invalid country code", "Number is too short", "Number is too long", "Invalid number"];
-        // let blockedCountries = ["af",'cn','np','ma','dz','eg','ws','gm','ye','bd'];
-        let blockedCountries = [];
-        // initialise plugin
-        var iti = window.intlTelInput(input, {
-        utilsScript: "{{ asset('assets/js/utils.js') }}",
-        preferredCountries: [],
-        initialCountry: "auto",
-        separateDialCode:true,
-        excludeCountries: blockedCountries,
-        geoIpLookup: function(callback) {
-            $.getJSON('https://get.geojs.io/v1/ip/country.json', function(resp) {
-            var countryCode = resp.country;
-            if(blockedCountries.includes(countryCode.toLowerCase()) ){
-                $('#error-msg').html('You are in restricted area');
-            }else{
-                callback(countryCode);
-                $('#error-msg').html('');
+            // populate date selectors
+            for (let d = 1; d <= 31; d++) daySel.innerHTML += `<option value="${d}">${d}</option>`;
+            const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            months.forEach((m,i)=> monthSel.innerHTML += `<option value='${i+1}'>${m}</option>`);
+            const currentYear = new Date().getFullYear();
+            for (let y=currentYear; y>=1900; y--) yearSel.innerHTML += `<option value="${y}">${y}</option>`;
+
+            // Tooltip system
+            function showTooltip(el, msg) {
+                hideTooltip(el);
+                const tooltip = document.createElement('div');
+                tooltip.className = 'tooltip-custom';
+                tooltip.innerText = msg;
+                el.parentElement.style.position = 'relative';
+                tooltip.style.position = 'absolute';
+                tooltip.style.background = '#ff4747';
+                tooltip.style.color = '#fff';
+                tooltip.style.padding = '6px 10px';
+                tooltip.style.borderRadius = '6px';
+                tooltip.style.fontSize = '13px';
+                tooltip.style.whiteSpace = 'nowrap';
+                tooltip.style.top = '100%';
+                tooltip.style.left = '0';
+                tooltip.style.marginTop = '3px';
+                tooltip.style.boxShadow = '0 2px 6px rgba(0,0,0,0.15)';
+                el.parentElement.appendChild(tooltip);
+                el.classList.add('is-invalid');
             }
-            });
-        }
-        });
-        // set it's initial value
-        iti.promise.then(function() {
-                let selectedData = iti.getSelectedCountryData();
-                var countryCode = selectedData.iso2;
-                if (countryCode) {
-                    countryInput.value = selectedData.name;
-                    $("#country-code").val(countryCode);
-                    $("#dial-code").val(selectedData.dialCode);
-                } else {
-                    let code = $("#country-code").val();
-                    iti.setCountry(code); // set default country to United States
-                    countryCode = code; // set countryCode to United States
+
+            function hideTooltip(el) {
+                const tooltip = el?.parentElement?.querySelector('.tooltip-custom');
+                if (tooltip) tooltip.remove();
+                el?.classList.remove('is-invalid');
+            }
+
+            function clearAllTooltips() {
+                form.querySelectorAll('.tooltip-custom').forEach(t => t.remove());
+                form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+            }
+
+            form.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                clearAllTooltips();
+
+                let valid = true;
+                const day = parseInt(daySel.value);
+                const month = parseInt(monthSel.value);
+                const year = parseInt(yearSel.value);
+
+                // Age validation
+                if (day && month && year) {
+                    const dob = new Date(year, month - 1, day);
+                    const today = new Date();
+                    let age = today.getFullYear() - dob.getFullYear();
+                    const m = today.getMonth() - dob.getMonth();
+                    if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
+                    if (age < 13) {
+                        valid = false;
+                        showTooltip(yearSel, "You must be at least 13 years old to sign up.");
+                    }
                 }
-        });
 
-        // listen to the telephone input for changes
-        input.addEventListener('countrychange', function(e) {
-            let selectedData =iti.getSelectedCountryData();
-            // console.log(selectedData);
-            countryInput.value = selectedData.name;
-            $("#country-code").val(selectedData.iso2);
-            $("#dial-code").val(selectedData.dialCode);
-        });
+                if (!valid) return;
 
-        var reset = function() {
-            input.classList.remove("error");
-            errorMsg.innerHTML = "";
-            errorMsg.classList.add("hide");
-            validMsg.classList.add("hide");
-        };
+                const formData = new FormData(form);
 
-        // on blur: validate
-        input.addEventListener('blur', function() {
-            reset();
-            if (input.value.trim()) {
-            if (iti.isValidNumber()) {
-                validMsg.classList.remove("hide");
-            } else {
-                input.classList.add("error");
-                var errorCode = iti.getValidationError();
-                errorMsg.innerHTML = errorMap[errorCode];
-                errorMsg.classList.remove("hide");
-            }
-            }
+                try {
+                    const response = await fetch("{{ route('signup.validate') }}", {
+                        method: "POST",
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                            'Accept': 'application/json'
+                        },
+                        body: formData
+                    });
+
+                    const result = await response.json();
+
+                    if (response.status === 422 && result.errors) {
+                        Object.keys(result.errors).forEach(key => {
+                            const el = form.querySelector(`[name="${key}"]`);
+                            if (el) showTooltip(el, result.errors[key][0]);
+                        });
+                    } else if (result.status === 'success') {
+                        form.submit();
+                    } else {
+                        alert('⚠ Something went wrong, please try again.');
+                    }
+
+                } catch (err) {
+                    console.error(err);
+                    alert("Server error. Please try again later.");
+                }
+            });
         });
-        // on keyup / change flag: reset
-        input.addEventListener('change', reset);
-        input.addEventListener('keyup', reset);
-    </script> --}}
+    </script>
 @endsection

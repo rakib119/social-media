@@ -2250,3 +2250,84 @@ img{
 	background-color:var(--main-color);
 }
 
+/* AUTH */
+.signup-container {
+    max-width: 432px;
+    margin: 40px auto;
+}
+.auth-logo {
+    font-size: 52px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.auth-card {
+    background: rgba(111, 20, 239, 0.09);
+    border-radius: 8px;
+    /* background: var(--color-thirtytwo); */
+    /* box-shadow: 0 2px 4px rgba(0,0,0,0.1); */
+}
+.auth-card h2 { font-weight: 600;
+    font-size: 25px;
+}
+.auth-card p { font-size: 15px;
+    /* color: #606770; */
+}
+.form-control, .form-select {
+    border-radius: 6px;
+    font-size: 15px;
+    }
+.form-control.is-invalid, .form-select.is-invalid {
+    border-color: #e03a3a !important;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23e03a3a" viewBox="0 0 16 16"><path d="M7.938 2.016a.13.13 0 0 1 .125 0l6.857 11.856c.02.034.03.074.03.115a.13.13 0 0 1-.125.125H1.175a.13.13 0 0 1-.125-.125c0-.04.01-.08.03-.115L7.938 2.016zM8 4.733a.5.5 0 0 0-.5.5v3.5a.5.5 0 0 0 1 0v-3.5a.5.5 0 0 0-.5-.5zm0 6.533a.667.667 0 1 0 0 1.333.667.667 0 0 0 0-1.333z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px 16px;
+}
+.gender-option {
+    border: 1px solid #ccd0d5;
+    border-radius: 6px;
+    padding: 6px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.gender-option input {
+        margin-right: 6px;
+}
+.signup-btn
+{
+    background: linear-gradient(to top left, var(--color-thirtythree) 0%, var(--color-thirtytwo) 100%);
+    color: #fff;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    font-size: 18px;
+    padding: 8px 0;
+    width: 100%;
+}
+.info-text {
+    font-size: 11px;
+    color: #1c1a1a;
+    text-align: left;
+    margin-top: 10px;
+}
+.tooltip-custom {
+    position: absolute;
+    background: #e03a3a;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 4px;
+    padding: 6px 10px;
+    white-space: nowrap;
+    z-index: 9999;
+}
+.tooltip-custom::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -6px;
+    transform: translateY(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent #e03a3a transparent transparent;
+}

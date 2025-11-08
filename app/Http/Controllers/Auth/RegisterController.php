@@ -50,10 +50,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            // 'phone' =>  ['required', 'string', 'max:30', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'otp' => ['required']
         ]);
     }
 
@@ -65,18 +62,29 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $verified_email         = Session::get('verified_email_address');
-        $email_verified_at      = Session::get('email_verified_at');
-        $verified_phone_number  = Session::get('verified_phone_number');
-        $phone_num_verified_at  = Session::get('phone_number_verified_at');
+
+        $session    = session('signup_payload');
+        $name       = isset($session['first_name']) ? $session['first_name']: null;
+        $surname    = isset($session['surname'])    ? $session['surname']   : null;
+        $gender     = isset($session['gender'])     ? $session['gender']    : null;
+        $day        = isset($session['day'])        ? $session['day']       : null;
+        $month      = isset($session['month'])      ? $session['month']     : null;
+        $year       = isset($session['year'])       ? $session['year']      : null;
+        $email      = isset($session['email'])      ? $session['email']     : null;
+        $password   = isset($session['password'])   ? $session['password']  : null;
+        $phone_number  = isset($session['phone_number']) ? $session['phone_number'] : null;
+        $date_of_birth = $day . '-' . $month . '-' . $year;
+        $date_of_birth = date('Y-m-d', strtotime($date_of_birth));
         return User::create([
-            'name' => $data['name'],
-            'email' => $verified_email,
-            'phone_number' => $verified_phone_number,
-            'email_verified_at' => $email_verified_at ,
-            'phone_number_verified_at' => $phone_num_verified_at,
-            'phone_number_verified_at' => $phone_num_verified_at,
-            'password' => Hash::make($data['password']),
+            'name'          => $name,
+            'surname'       => $surname,
+            'gender'        => $gender,
+            'date_of_birth' => $date_of_birth,
+            'email'         => $email,
+            'phone_number'  => $phone_number ,
+            'password'      => Hash::make($password),
+            'email_verified_at'  => $email ? now() : null,
+            'phone_number_verified_at'  =>  $phone_number ? now() : null ,
         ]);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AamarPayController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\BackendController;
 use App\Http\Controllers\DashboardControllers\InfoController;
 use App\Http\Controllers\DashboardControllers\PermissionController;
@@ -16,10 +17,19 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
+Route::post('/signup/validate', [OtpController::class, 'validate_signup'])->name('signup.validate');
+Route::post('/verify/otp', [OtpController::class, 'verify_otp'])->name('verify.otp');
+Route::post('/validate/otp', [OtpController::class, 'validate_otp'])->name('validate.otp');
+Route::post('/resend/otp', [OtpController::class, 'otp_resend'])->name('otp.resend');
 Route::post('/send-email-otp', [OtpController::class, 'sendEmailOtp'])->name('send_email.otp');
 Route::post('/verify-email-otp', [OtpController::class, 'verifyEmailOtp'])->name('verify_email.otp');
 Route::post('/send-phone-otp', [OtpController::class, 'sendPhoneOtp'])->name('send_phone.otp');
 Route::post('/verify-phone-otp', [OtpController::class, 'verifyPhoneOtp'])->name('verify_phone.otp');
+Route::get('password/verify-otp', [ForgotPasswordController::class, 'showOtpForm'])->name('password.verify-otp');
+Route::post('password/verify-otp', [ForgotPasswordController::class, 'verifyOtp'])->name('password.verify-otp.submit');
+Route::get('password/reset/{id}', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset.form');
+Route::post('password/reset/{id}', [ForgotPasswordController::class, 'resetPassword'])->name('password.reset.submit');
+
 
 Route::controller(HomeController::class)->group(function(){
     Route::get('/notice', 'notice')->name('notice');
