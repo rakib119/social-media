@@ -51,7 +51,7 @@ class OtpController extends Controller
                 try {
                     $email = $request->email_or_mobile;
                     $otp = rand(100000, 999999);
-                    // Notification::route('mail', $email)->notify(new SendOtpNotification($otp));
+                    Notification::route('mail', $email)->notify(new SendOtpNotification($otp));
                     $data['verify_otp']     = $otp;
                     $data['contact_type']   = 'Email Address';
                     $data['email_address']  = $email;
@@ -97,10 +97,15 @@ class OtpController extends Controller
             Session::put('signup_payload', $data);
 
         }
-        return response()->json(['status' => 'success', 'message' => 'Validation passed.']);
+        // return response()->json(['status' => 'success', 'message' => 'Validation passed.']);
+        return redirect()->route('verify.otp');
     }
 
-    public function verify_otp(Request $request)
+    public function verify_otp_post(Request $request)
+    {
+        return redirect()->route('verify.otp');
+    }
+    public function verify_otp()
     {
         return view('auth.otp_validation');
     }

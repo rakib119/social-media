@@ -24,12 +24,14 @@ Route::post('/resend/otp', [OtpController::class, 'otp_resend'])->name('otp.rese
 Route::post('/send-email-otp', [OtpController::class, 'sendEmailOtp'])->name('send_email.otp');
 Route::post('/verify-email-otp', [OtpController::class, 'verifyEmailOtp'])->name('verify_email.otp');
 Route::post('/send-phone-otp', [OtpController::class, 'sendPhoneOtp'])->name('send_phone.otp');
+
 Route::post('/verify-phone-otp', [OtpController::class, 'verifyPhoneOtp'])->name('verify_phone.otp');
+
+Route::post('send/reset/otp', [ForgotPasswordController::class, 'sendResetOtp'])->name('send_reset_otp');
 Route::get('password/verify-otp', [ForgotPasswordController::class, 'showOtpForm'])->name('password.verify-otp');
 Route::post('password/verify-otp', [ForgotPasswordController::class, 'verifyOtp'])->name('password.verify-otp.submit');
-Route::get('password/reset/{id}', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset.form');
-Route::post('password/reset/{id}', [ForgotPasswordController::class, 'resetPassword'])->name('password.reset.submit');
-
+Route::get('reset/password/{id}', [ForgotPasswordController::class, 'showResetForm'])->name('reset.password.form');
+Route::post('reset/password/{id}', [ForgotPasswordController::class, 'resetPassword'])->name('confirm.password.reset.submit');
 
 Route::controller(HomeController::class)->group(function(){
     Route::get('/notice', 'notice')->name('notice');

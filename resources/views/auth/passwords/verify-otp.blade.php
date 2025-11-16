@@ -33,9 +33,9 @@
         <div class="banner-one_shadow-layer" style="background-image:url({{ asset('assets/images/background/pattern-27.png') }})"></div>
         <div class="row justify-content-center">
             <div class="col-md-6" style="z-index: 1;">
-                <div class="auth-logo text-center mb-3">
+                {{-- <div class="auth-logo text-center mb-3">
                     <a href="{{ route('home') }}"><img src="{{ $logo }}" alt="{{ $web_title }}"></a>
-                </div>
+                </div> --}}
 
                 <div class="auth-card p-4">
                     <h2>Verify OTP</h2>
@@ -43,6 +43,10 @@
 
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">{{ session('status') }}</div>
+                    @endif
+
+                    @if (session('error_message'))
+                        <div class="alert alert-danger" role="alert">{{ session('error_message') }}</div>
                     @endif
 
                     <form method="POST" action="{{ route('password.verify-otp.submit') }}">
@@ -65,9 +69,14 @@
                             </div>
                         </div>
                     </form>
-
-                    <div class="text-center mt-3">
-                        <a href="{{ route('password.request') }}" class="text-muted">Back to Forgot Password</a>
+                    <div class="row mt-5 mb-3">
+                        <div class="col-12" style="text-align:center;">
+                            @if (Route::has('password.request'))
+                                <a href="{{ route('password.request') }}">
+                                    {{ __("Back to Forgot Password") }}
+                                </a>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>

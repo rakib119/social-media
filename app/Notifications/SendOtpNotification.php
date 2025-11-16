@@ -24,15 +24,18 @@ class SendOtpNotification extends Notification
         return ['mail'];
     }
 
-    // Format the email message
+    // Format the email message for OTP verification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Your OTP Code')
-            ->greeting('Hello!')
-            ->line('Your OTP code is: ' . $this->otp)
-            ->line('It will expire in 5 minutes.')
-            ->salutation('Thanks for using our service!');
+            ->subject('Verify Your Email Address')
+            ->greeting('Welcome!')
+            ->line('Thank you for registering with us.')
+            ->line('Please use the following One-Time Password (OTP) to verify your email address:')
+            ->line('**' . $this->otp . '**')
+            // ->line('This code will expire in 5 minutes.')
+            ->line('If you did not request this verification, please ignore this email.')
+            ->salutation('Best regards, AscentaFlow Team');
     }
 
     /**

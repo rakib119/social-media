@@ -31,11 +31,11 @@
         <div class="banner-one_shadow-layer" style="background-image:url({{asset("assets/images/background/pattern-27.png")}})"></div>
         <div class="row justify-content-center">
             <div class="col-md-6" style="z-index: 1;">
-                <div class="auth-logo">
+                {{-- <div class="auth-logo">
                     <div id="logo">
                         <a href="{{ route('home')}}"> <img src="{{ $logo }}" alt="{{ $web_title }}"></a>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="auth-card p-4">
                     <h2>Confirm Password</h2>

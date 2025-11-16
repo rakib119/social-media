@@ -32,11 +32,11 @@
         <div class="banner-one_shadow-layer" style="background-image:url({{asset("assets/images/background/pattern-27.png")}})"></div>
         <div class="row justify-content-center">
             <div class="col-md-6" style="z-index: 1;">
-                    <div class="auth-logo">
+                    {{-- <div class="auth-logo">
                         <div id="logo">
                             <a href="{{ route('home')}}"> <img src="{{ $logo }}" alt="{{ $web_title }}"></a>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="auth-card p-4">
                         <h2>Reset Password</h2>
                         <p>Please enter your email address or mobile number and new password to reset your account password.</p>
@@ -46,7 +46,7 @@
                             </div>
                         @endif
 
-                        <form method="POST" action="{{ route('password.email') }}">
+                        <form method="POST" action="{{ route('send_reset_otp') }}">
                             @csrf
 
                             <div class="row mb-3">
@@ -63,7 +63,7 @@
 
                             <div class="row mb-0">
                                 <div class="col-md-12 " style="text-align:center;">
-                                    <button class=" signup-btn mt-3" type="submit">Send Password Reset Link</button>
+                                    <button class=" signup-btn mt-3" type="submit">Send Reset Otp</button>
                                 </div>
                             </div>
                         </form>

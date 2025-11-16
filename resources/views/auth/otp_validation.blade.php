@@ -33,11 +33,11 @@
             <div class="banner-one_shadow-layer" style="background-image:url({{asset("assets/images/background/pattern-27.png")}})"></div>
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="auth-logo">
+                    {{-- <div class="auth-logo">
                         <div id="logo">
                             <a href="{{ route('home')}}"> <img src="{{ $logo }}" alt="{{ $web_title }}"></a>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="col-md-6" style="z-index: 1;">
                         <div class="auth-card p-4">
                             <h2>Verify Your {{$contact_type}}</h2>
@@ -54,12 +54,12 @@
                             </form>
 
 
-                            <form class="d-inline" method="POST" action="{{ route('otp.resend') }}">
+                            {{-- <form class="d-inline" method="POST" action="{{ route('otp.resend') }}">
                                 @csrf
                                 <p class="info-text">Before proceeding, please check your {{$contact_type}} for a verification OTP. If you did not receive the OTP
                                     <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.
                                 </p>
-                            </form>
+                            </form> --}}
                         </div>
                     </div>
                 </div>
