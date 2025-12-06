@@ -16,7 +16,7 @@
 @section('mainContent')
 
 <section class="banner-one">
-    <div class="bubble-dotted">
+    {{-- <div class="bubble-dotted">
         <span class="dotted dotted-1"></span>
         <span class="dotted dotted-2"></span>
         <span class="dotted dotted-3"></span>
@@ -27,9 +27,9 @@
         <span class="dotted dotted-8"></span>
         <span class="dotted dotted-9"></span>
         <span class="dotted dotted-10"></span>
-    </div>
+    </div> --}}
     <div class="auto-container">
-        <div class="banner-one_shadow-layer" style="background-image:url({{asset("assets/images/background/pattern-27.png")}})"></div>
+        {{-- <div class="banner-one_shadow-layer" style="background-image:url({{asset("assets/images/background/pattern-27.png")}})"></div> --}}
         <div class="row justify-content-center" >
             <div class="col-md-6" style="z-index: 1;">
                 {{-- <div class="auth-logo">
@@ -86,24 +86,27 @@
                                             {{ __('Remember Me') }}
                                         </label>
                                     </div>
-                                    <div class="col-6" style="text-align: right;">
-                                        @if (Route::has('password.request'))
-                                            <a href="{{ route('password.request') }}">
-                                                {{ __('Forgot Your Password?') }}
-                                            </a>
-                                        @endif
-                                    </div>
                                 </div>
                                 <div class="row justify-content-center mb-0">
                                     <div class="col-md-12 " style="text-align:center;">
                                         <button class=" signup-btn mt-3" type="submit">Login</button>
                                     </div>
+                                    <div class="col-md-12 mt-3" style="text-align: center;">
+                                        @if (Route::has('password.request'))
+                                            <a href="{{ route('password.request') }}">
+                                                {{ __('Forgotten password?') }}
+                                            </a>
+                                        @endif
+                                    </div>
                                 </div>
-                                <div class="row mt-5 mb-3">
+                                <div class="row mb-3">
+                                    <hr class="my-3">
                                     <div class="col-12" style="text-align:center;">
                                         @if (Route::has('register'))
-                                            <a href="{{ route('register') }}">
-                                                {{ __("Don't have account? Sign up") }}
+                                            <a class="btn-style-tean theme-btn btn-item" href="{{ route('register') }}">
+                                                <div class="btn-wrap">
+                                                    <span class="text-one">{{ __("Create new account") }}</span>
+                                                </div>
                                             </a>
                                         @endif
                                     </div>

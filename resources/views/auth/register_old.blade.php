@@ -13,8 +13,11 @@
     $logo_white    = asset('assets/images/info/'.$logo_white);
 @endphp
 @section('css')
-    <style>
+   <style>
+        :root {
+            --pink: #ee0979;
 
+        }
 
         /* Card */
         .form-card {
@@ -23,8 +26,69 @@
             border-radius: 10px;
             box-shadow: 0 5px 25px rgba(0,0,0,0.2);
         }
+        /* Step Bar (TOP) */
+        .stepper {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
 
+        .stepper-item {
+            text-align: center;
+            width: 33%;
+            color: white;
+        }
 
+        .stepper-item .circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 30px;
+            background: white;
+            color:  var(--pink);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            font-weight: bold;
+        }
+
+        .stepper-item.active .circle {
+            background: var(--pink);
+            color: white;
+        }
+
+        .stepper-item.completed .circle {
+            background: var(--pink);
+            color: white;
+        }
+
+        .stepper-item .label {
+            margin-top: 8px;
+            font-size: 11px;
+            /* letter-spacing: 1px; */
+        }
+
+        /* Line between steps */
+        .stepper-line {
+            position: absolute;
+            top: 35px;
+            left: 10%;
+            width: 80%;
+            height: 3px;
+            background: rgba(255,255,255,0.7);
+            z-index: -1;
+        }
+
+        .stepper-line-progress {
+            position: absolute;
+            top: 35px;
+            left: 10%;
+            width: 0%;
+            height: 3px;
+            background: var(--pink);
+            z-index: -1;
+            transition: width .3s ease;
+        }
 
         /* Steps */
         .step-box {
@@ -69,7 +133,7 @@
 @endsection
 @section('mainContent')
     <section class="banner-one">
-        {{-- <div class="bubble-dotted">
+        <div class="bubble-dotted">
             <span class="dotted dotted-1"></span>
             <span class="dotted dotted-2"></span>
             <span class="dotted dotted-3"></span>
@@ -80,12 +144,12 @@
             <span class="dotted dotted-8"></span>
             <span class="dotted dotted-9"></span>
             <span class="dotted dotted-10"></span>
-        </div> --}}
+        </div>
         <div class="auto-container">
-            {{-- <div class="banner-one_shadow-layer" style="background-image:url({{asset("assets/images/background/pattern-27.png")}})"></div> --}}
+            <div class="banner-one_shadow-layer" style="background-image:url({{asset("assets/images/background/pattern-27.png")}})"></div>
             <div class="container">
 
-                <div class="row justify-content-center d-none d-lg-flex">{{--d-lg-flex DESKTOP MODE --}}
+                <div class="row justify-content-center d-none d-lg-flex">{{-- DESKTOP MODE --}}
                     {{-- <div class="auth-logo">
                         <div id="logo">
                             <a href="{{ route('home')}}"> <img src="{{ $logo }}" alt="{{ $web_title }}"></a>
@@ -144,16 +208,13 @@
                                         <input type="radio" name="gender" value="custom" required data-msg="Select gender">
                                     </label>
                                 </div>
-                                <label class="col-form-label mt-3 mb-1">Mobile or Email</label>
+
                                 <div class="position-relative">
                                     <input type="text" class="form-control mt-3" id="contact" placeholder="Mobile number or email address" name="email_or_mobile" required data-msg="Enter a valid mobile or email">
                                 </div>
-                                <label class="col-form-label mt-3 mb-1">Password</label>
+
                                 <div class="position-relative">
-                                    <div class="d-flex">
-                                        <input type="password" class="form-control" id="password" name="password" placeholder="New password" required minlength="6" data-msg="Enter at least 6 characters">
-                                        <i class="fas fa-eye-slash" id="loginTogglePassword" style="margin:auto -30px; cursor: pointer;"></i>
-                                    </div>
+                                    <input type="password" class="form-control mt-3" id="password" name="password" placeholder="New password" required minlength="6" data-msg="Enter at least 6 characters">
                                 </div>
 
                                 <p class="info-text">By clicking Sign Up, you agree to our Terms, Privacy Policy and Cookies Policy. You may receive SMS notifications from us and can opt out at any time.</p>
@@ -164,7 +225,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row d-flex justify-content-center mt-5 d-lg-none">{{--  d-lg-none PHONE MODE --}}
+                <div class="row d-flex justify-content-center mt-5 d-lg-none">{{-- PHONE MODE --}}
                     <!-- CARD -->
                     <div class="row justify-content-center w-100">
                         <div class="col-md-6" style="z-index: 1;">
@@ -174,111 +235,97 @@
                                     <div class="stepper-line-progress" id="lineProgress"></div>
                                 </div>
 
+                                <div class="stepper">
+                                    <div class="stepper-item completed" id="si1">
+                                        <div class="circle">1</div>
+                                        <div class="label">PERSONAL DETAILS</div>
+                                    </div>
+
+                                    <div class="stepper-item" id="si2">
+                                        <div class="circle">2</div>
+                                        <div class="label">DATE OF BIRTH</div>
+                                    </div>
+
+                                    <div class="stepper-item" id="si3">
+                                        <div class="circle">3</div>
+                                        <div class="label">GENDER</div>
+                                    </div>
+
+                                    <div class="stepper-item" id="si4">
+                                        <div class="circle">4</div>
+                                        <div class="label">CONTACT</div>
+                                    </div>
+                                </div>
                                 <form id="regForm">
                                     <!-- STEP 1 -->
                                     <div class="step-box active" id="step1">
-                                        <div>
-                                            <picture>
-                                                <img src="{{asset('assets/images/background/5.jpg')}}" alt="">
-                                            </picture>
-                                        </div>
-                                        <button type="button" class="signup-btn" onclick="validateStep1()">Get Started</button>
-                                    </div>
-                                    <!-- STEP 2 -->
-                                    <div class="step-box" id="step2">
-                                        <h4 class="">What's your name?</h4>
-                                        <p class="text-muted mb-4">Enter the name you use in real life.</p>
-                                        <div class="row mt-3">
-                                            <div class="col-6">
+                                        <h4 class="text-center">PERSONAL DETAILS</h4>
+                                        <p class="text-center text-muted mb-4">Tell us something more about you</p>
+                                        <div class="row">
+                                            <div class="col-12">
                                                 <input type="text" class="form-control" id="ms_firstName" placeholder="First Name" name="first_name">
                                                 <p class="text-danger" id="ms_firstNameError"></p>
                                             </div>
-                                            <div class="col-6">
+                                            <div class="col-12">
                                                 <input type="text" class="form-control" id="ms_surname" placeholder="Surname" name="surname">
                                                 <p class="text-danger" id="ms_surnameError"></p>
                                             </div>
                                         </div>
-                                        <button type="button" class="signup-btn" onclick="validateStep2()">Next</button>
+                                        <button type="button" class="next-btn float-end" onclick="validateStep1()">Next</button>
+                                    </div>
+
+                                    <!-- STEP 2 -->
+                                    <div class="step-box" id="step2">
+                                        <h4 class="text-center">DATE OF BIRTH</h4>
+                                        <p class="text-center text-muted mb-4">Select your date of birth</p>
+
+                                        <input type="date" class="form-control mb-2" id="ms_dob" name="date_of_birth" data-msg="Select date of Birth">
+                                        <p class="text-danger" id="ms_dobError"></p>
+
+                                        <button type="button" class="back-btn mt-4" onclick="goStep(1)">Back</button>
+                                        <button type="button" class="next-btn float-end mt-4" onclick="validateStep2()">Next</button>
                                     </div>
 
                                     <!-- STEP 3 -->
                                     <div class="step-box" id="step3">
-                                        <h4>What's your date of birth?</h4>
-                                        <p class="text-muted mb-4">Choose your date of birth. You always make this private later.Why do I need to provide my date of birth?</p>
-                                        <div class="row mt-3">
-                                            <div class="col-12">
-                                                <input type="date" class="form-control mt-3 mb-2" id="ms_dob" name="date_of_birth" data-msg="Select date of Birth">
-                                                <p class="text-danger" id="ms_dobError"></p>
-                                            </div>
-                                        </div>
+                                        <h4 class="text-center">GENDER</h4>
 
-                                        <button type="button" class="signup-btn mt-4" onclick="validateStep3()">Next</button>
-                                    </div>
-
-                                    <!-- STEP 4 -->
-                                    <div class="step-box" id="step4">
-                                        <h4>What's your gender?</h4>
-
-                                        <div class="row mt-3" id="ms_genderGroup">
-                                            <div class="col-12 mb-3">
-                                                <div class="row">
-                                                    <div class="col-4">
-                                                        <label class="gender-option flex-fill"><span>Male</span>
-                                                            <input type="radio" name="ms_gender" value="male" data-msg="Select gender">
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 mb-3">
-                                                <div class="row">
-                                                    <div class="col-4">
-                                                        <label class="gender-option flex-fill"><span>Female</span>
-                                                            <input type="radio" name="ms_gender" value="female" data-msg="Select gender">
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 mb-3">
-                                                <div class="row">
-                                                    <div class="col-4">
-                                                        <label class="gender-option flex-fill"><span>Other</span>
-                                                            <input type="radio" name="ms_gender" value="custom" data-msg="Select gender">
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <div class="d-flex gap-2 position-relative" id="ms_genderGroup">
+                                            <label class="gender-option flex-fill"><span>Male</span>
+                                                <input type="radio" name="ms_gender" value="male" data-msg="Select gender">
+                                            </label>
+                                            <label class="gender-option flex-fill"><span>Female</span>
+                                                <input type="radio" name="ms_gender" value="female" data-msg="Select gender">
+                                            </label>
+                                            <label class="gender-option flex-fill"><span>Other</span>
+                                                <input type="radio" name="ms_gender" value="custom" data-msg="Select gender">
+                                            </label>
                                         </div>
 
                                         <p class="text-danger" id="ms_genderError"></p>
 
-                                        <button type="button" class="signup-btn mt-4" onclick="validateStep4()">Next</button>
+                                        <button type="button" class="back-btn mt-4" onclick="goStep(2)">Back</button>
+                                        <button type="button" class="next-btn float-end mt-4" onclick="validateStep3()">Next</button>
                                     </div>
 
-                                    <!-- STEP 5 -->
-                                    <div class="step-box" id="step5">
-                                        <h4 id="contactTitle">What's your mobile number?</h4>
-                                         <p class="text-muted mb-4" id="contactInfo">Enter the mobile number on which you can be contacted. No one will see this on your profile.</p>
-                                        <div class="row mt-3">
+                                    <!-- STEP 4 -->
+                                    <div class="step-box" id="step4">
+                                        <h4 class="text-center">CONTACT DETAILS</h4>
+
+                                        <div class="row">
                                             <div class="col-12">
-                                                <label id="contactLable">Mobile Number</label>
-                                                <input type="text" class="form-control ms_contact_mobile" id="ms_contact" placeholder="Mobile" name="email_or_mobile">
-                                                <p class="text-danger" style="margin-bottom:0;" id="ms_contactError"></p>
-                                                <p class="text-muted" id="contactNote" >You may receive SMS notification from us.</p>
+                                                <input type="text" class="form-control mt-4" id="ms_contact" placeholder="Mobile or Email" name="email_or_mobile" data-msg="Enter a valid mobile or email">
+                                                <p class="text-danger" id="ms_contactError"></p>
                                             </div>
                                             <div class="col-12">
-                                                <label>Password</label>
-                                                {{-- <input type="password" class="form-control" id="ms_password" placeholder="New password" data-msg="Enter at least 6 characters"> --}}
-                                                <div class="d-flex">
-                                                    <input type="password" class="form-control" id="ms_password" name="password" placeholder="New password" required minlength="6" data-msg="Enter at least 6 characters">
-                                                    <i class="fas fa-eye-slash" id="msRegPassword" style="margin:auto -30px; cursor: pointer;"></i>
-                                                </div>
+                                                <input type="password" class="form-control mt-3" id="ms_password" placeholder="New password" data-msg="Enter at least 6 characters">
                                                 <p class="text-danger" id="ms_passwordError"></p>
                                             </div>
                                         </div>
-                                        <button type="button" class="signup-btn mt-4" onclick="validateStep5()">Next</button>
-                                        <button type="button" id="switchButton" class="signup-btn mt-4" value="1" onclick="switchContact(this)" >Sign up with email address</button>
-                                    </div>
 
+                                        <button type="button" class="back-btn mt-4" onclick="goStep(3)">Back</button>
+                                        <button type="button" class="next-btn float-end mt-4" onclick="validateStep4()">Next</button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -290,9 +337,7 @@
 @endsection
 
 @section('javaScricpt')
-    <script src="{{asset('assets/js/otpValidation.js')}}"></script>
     <script>
-
 
         // Clear errors on input and tooltip
 
@@ -308,14 +353,6 @@
             }
         });
 
-        // hide tooltip immediately when user types or changes a field
-        document.addEventListener('input', function(e) {
-            const el = e.target;
-            if (!(el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement || el instanceof HTMLSelectElement)) return;
-            // only act for fields inside the signup form
-            if (!el.closest('#signupForm')) return;
-            hideTooltip(el);
-        });
         // Tooltip system
         function showTooltip(el, msg) {
             hideTooltip(el);
@@ -344,12 +381,12 @@
             el?.classList.remove('is-invalid');
         }
 
-
+        function clearAllTooltips() {
+            form.querySelectorAll('.tooltip-custom').forEach(t => t.remove());
+            form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+        }
 
         function validateStep1() {
-             goStep(2);
-        }
-        function validateStep2() {
             let data = {
                 first_name: $("#ms_firstName").val(),
                 surname: $("#ms_surname").val(),
@@ -361,7 +398,7 @@
                 method: "POST",
                 data: data,
                 success: function () {
-                    goStep(3);
+                    goStep(2);
                 },
                 error: function (xhr) {
                     let errors = xhr.responseJSON.errors;
@@ -375,7 +412,7 @@
                 }
             });
         }
-        function validateStep3() {
+        function validateStep2() {
             let data = {
                 date_of_birth: $("#ms_dob").val(),
                 _token: "{{ csrf_token() }}"
@@ -386,7 +423,7 @@
                 method: "POST",
                 data: data,
                 success: function () {
-                    goStep(4);
+                    goStep(3);
                 },
                 error: function (xhr) {
                     let errors = xhr.responseJSON.errors;
@@ -394,7 +431,7 @@
                 }
             });
         }
-        function validateStep4() {
+        function validateStep3() {
             let data = {
                 gender: $("input[name='ms_gender']:checked").val(),
                 _token: "{{ csrf_token() }}"
@@ -405,24 +442,17 @@
                 method: "POST",
                 data: data,
                 success: function () {
-                    goStep(5);
+                    goStep(4);
                 },
                 error: function (xhr) {
                     $("#ms_genderError").text(xhr.responseJSON.errors.gender[0]);
                 }
             });
         }
-        function validateStep5() {
-            var input_type = $('#ms_contact').attr('type');
-            if(input_type=='email'){
-                contact_type = 'Email Address';
-            }else{
-                contact_type = 'Mobile Number';
-            }
+        function validateStep4() {
             let data = {
                 email_or_mobile: $("#ms_contact").val(),
                 password: $("#ms_password").val(),
-                contact_type: contact_type,
                 _token: "{{ csrf_token() }}"
             };
 
@@ -445,58 +475,20 @@
                 }
             });
         }
-        function switchContact(el) {
 
-            var buttonVal = el.value;
-            $('#ms_contact').val('');
-            $('#ms_contactError').text('');
-            $('#ms_passwordError').text('');
-            if(buttonVal==1){
-                el.innerHTML="Sign up with mobile number";
-                $('#contactLable').text('Email Address');
-                $('#ms_contact').attr('type','email');
-                $('#ms_contact').attr('placeholder','Email Address');
-                $('#contactTitle').text("What's your email address?");
-                $('#contactInfo').text('Enter the email address on which you can be contacted. No one will see this on your profile.');
-                $('#contactNote').text("You'll also receive emails from us and can opt out at any time.");
-                el.value=2;
-            }else{
-                el.innerHTML="Sign up with email address";
-                $('#contactLable').text('Mobile Number');
-                $('#ms_contact').attr('type','text');
-                $('#ms_contact').attr('placeholder','Mobile');
-                $('#contactTitle').text("What's your mobile number?");
-                $('#contactInfo').text('Enter the mobile number on which you can be contacted. No one will see this on your profile.');
-                $('#contactNote').text('You may receive SMS notification from us.');
-                el.value=1;
-            }
-        }
-        function validateEmail(email) {
-            var re =/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-            return re.test(email);
-        }
-        function validateMobile(mobile) {
-            var cleaned = mobile.replace(/[\s\-()]/g,'');
-            if(!cleaned) return false;
-            if(cleaned[0]==='+'){
-                cleaned = cleaned.slice(1);
-            }
-            if(!/^d{10,15}$/.test(cleaned)) return false;
-            return true;
-        }
         // Show Step
         function goStep(step){
             $(".step-box").removeClass("active");
             $("#step"+step).addClass("active");
 
-            // $(".stepper-item").removeClass("active completed");
+            $(".stepper-item").removeClass("active completed");
 
-           /*  for (let i = 1; i <= step; i++) {
+            for (let i = 1; i <= step; i++) {
                 if (i < step) $("#si"+i).addClass("completed");
-                // else $("#si"+i).addClass("active");
-            } */
+                else $("#si"+i).addClass("active");
+            }
 
-            // $("#lineProgress").css("width", ((step-1)*25)+"%");
+            $("#lineProgress").css("width", ((step-1)*25)+"%");
         }
 
 
@@ -505,10 +497,7 @@
             const daySel = document.getElementById('day');
             const monthSel = document.getElementById('month');
             const yearSel = document.getElementById('year');
-            function clearAllTooltips() {
-                form.querySelectorAll('.tooltip-custom').forEach(t => t.remove());
-                form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
-            }
+
             // populate date selectors
             for (let d = 1; d <= 31; d++) daySel.innerHTML += `<option value="${d}">${d}</option>`;
             const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -572,6 +561,7 @@
                     alert("Server error. Please try again later.");
                 }
             });
+
 
         });
 

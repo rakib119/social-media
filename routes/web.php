@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AamarPayController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\BackendController;
 use App\Http\Controllers\DashboardControllers\InfoController;
 use App\Http\Controllers\DashboardControllers\PermissionController;
@@ -18,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 Route::post('/signup/validate', [OtpController::class, 'validate_signup'])->name('signup.validate');
-Route::post('/verify/otp', [OtpController::class, 'verify_otp'])->name('verify.otp');
+Route::get('/verify/otp', [OtpController::class, 'verify_otp'])->name('verify.otp');
 Route::post('/validate/otp', [OtpController::class, 'validate_otp'])->name('validate.otp');
 Route::post('/resend/otp', [OtpController::class, 'otp_resend'])->name('otp.resend');
 Route::post('/send-email-otp', [OtpController::class, 'sendEmailOtp'])->name('send_email.otp');
@@ -32,6 +33,12 @@ Route::get('password/verify-otp', [ForgotPasswordController::class, 'showOtpForm
 Route::post('password/verify-otp', [ForgotPasswordController::class, 'verifyOtp'])->name('password.verify-otp.submit');
 Route::get('reset/password/{id}', [ForgotPasswordController::class, 'showResetForm'])->name('reset.password.form');
 Route::post('reset/password/{id}', [ForgotPasswordController::class, 'resetPassword'])->name('confirm.password.reset.submit');
+
+Route::post('/register/step1', [RegisterController::class, 'step1'])->name('register.step1');
+Route::post('/register/step2', [RegisterController::class, 'step2'])->name('register.step2');
+Route::post('/register/step3', [RegisterController::class, 'step3'])->name('register.step3');
+Route::post('/register/step4', [RegisterController::class, 'step4'])->name('register.step4');
+Route::post('/register/step5', [RegisterController::class, 'step5'])->name('register.step5');
 
 Route::controller(HomeController::class)->group(function(){
     Route::get('/notice', 'notice')->name('notice');

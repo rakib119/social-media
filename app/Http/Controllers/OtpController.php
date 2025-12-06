@@ -67,7 +67,7 @@ class OtpController extends Controller
                     $phone = $request->email_or_mobile;
                     $otp = rand(100000, 999999);
                     $msg = "Your OTP for Registration is: $otp. (" . env('APP_NAME') . ")";
-                    // send_sms($phone,$msg);
+                    send_sms($phone,$msg);
 
                     $data['verify_otp']     = $otp;
                     $data['contact_type']   = 'Mobile Number';

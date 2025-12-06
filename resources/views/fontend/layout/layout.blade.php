@@ -99,7 +99,7 @@
                             <div class="footer-column col-lg-6 col-md-6 col-sm-12">
                                 <div class="footer-widget logo-widget">
                                     <div class="logo">
-                                        <a href="{{ route('home') }}"> <picture><img src="{{ $logo_white }}" /></picture></a>
+                                        <a href="{{ route('home') }}"> <picture><img src="{{ $logo }}" /></picture></a>
                                     </div>
                                     <div class="text">{{ $company_description }}</div>
                                 </div>

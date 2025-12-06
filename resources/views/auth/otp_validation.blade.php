@@ -17,7 +17,7 @@
 
 @section('mainContent')
     <section class="banner-one">
-        <div class="bubble-dotted">
+        {{-- <div class="bubble-dotted">
             <span class="dotted dotted-1"></span>
             <span class="dotted dotted-2"></span>
             <span class="dotted dotted-3"></span>
@@ -28,9 +28,9 @@
             <span class="dotted dotted-8"></span>
             <span class="dotted dotted-9"></span>
             <span class="dotted dotted-10"></span>
-        </div>
+        </div> --}}
         <div class="auto-container">
-            <div class="banner-one_shadow-layer" style="background-image:url({{asset("assets/images/background/pattern-27.png")}})"></div>
+            {{-- <div class="banner-one_shadow-layer" style="background-image:url({{asset("assets/images/background/pattern-27.png")}})"></div> --}}
             <div class="container">
                 <div class="row justify-content-center">
                     {{-- <div class="auth-logo">

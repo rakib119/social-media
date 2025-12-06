@@ -373,6 +373,19 @@ $('#loginTogglePassword').click(function() {
         icon.addClass('fa-eye-slash');
     }
 });
+$('#msRegPassword').click(function() {
+    var icon = $("#msRegPassword");
+    var passInput = $("#ms_password");
+    if (passInput.attr('type') === 'password') {
+        passInput.attr('type', 'text');
+        icon.removeClass('fa-eye-slash');
+        icon.addClass('fa-eye');
+    } else {
+        passInput.attr('type', 'password');
+        icon.removeClass('fa-eye');
+        icon.addClass('fa-eye-slash');
+    }
+});
 
 function clear_pass_error(){
     var newPassword     = $('#newPassword').val();
