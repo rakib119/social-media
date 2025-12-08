@@ -129,7 +129,7 @@ function cropImage(inputObj, photo_gallery='', cropHeight=150, cropWidth=150, vi
                         formData.append('photo_gallery', photo_gallery);
                             // Make AJAX request to Laravel backend
                         $.ajax({
-                            url: '/social-media/upload-photo',  // Laravel route
+                            url: '/upload-photo',  // Laravel route
                             method: 'POST',
                             data: formData,
                             contentType: false,
@@ -200,7 +200,7 @@ let currentStep = 1;
 // Function to handle form submission
 function handleFormSubmit(stepNumber, formData) {
     $.ajax({
-    url: `/social-media/submit-step/${stepNumber}`, // Backend route for each step
+    url: `/submit-step/${stepNumber}`, // Backend route for each step
     type: 'POST',
     data: formData,
     processData: false,
@@ -230,7 +230,7 @@ function handleFormSubmit(stepNumber, formData) {
 // Function to handle back button click
 function handleBackButton(stepNumber) {
     $.ajax({
-    url: `/social-media/load-step/${stepNumber - 1}`, // Route to load the previous step
+    url: `/load-step/${stepNumber - 1}`, // Route to load the previous step
     type: 'GET',
     success: function(response) {
         if (response.success) {
@@ -357,7 +357,7 @@ $(document).on('click', '#back-button', function() {
 
 //                         // Make AJAX request to Laravel backend
 //                         $.ajax({
-//                             url: '/social-media/upload-photo',  // Laravel route
+//                             url: '/upload-photo',  // Laravel route
 //                             method: 'POST',
 //                             data: formData,
 //                             contentType: false,
@@ -450,7 +450,7 @@ function loadHtmlElement_multiple(routeUrl, data, inputIds,columnNames) {
             for (let i = 0; i < splitInputIds.length; i++) {
                 let InputId     = splitInputIds[i];
                 let columnName  = splitcolumnName[i];
-                let value       = responseJSON[columnName] || ''; 
+                let value       = responseJSON[columnName] || '';
                 // console.log(`Setting value for ${InputId}: ${value}`);
                 $(`#${InputId}`).val(value);
             }
@@ -513,7 +513,7 @@ function getPaymentComponent(method,routeUrl, data, containerId,checked=false)
 }
 function getNotifications() {
     $.ajax({
-        url: "/social-media/get-notifications",
+        url: "/get-notifications",
         type: "GET",
         success: function (response)
         {
@@ -533,7 +533,7 @@ function readNotification() {
     let unReadNotification = $('#unread_notification').html()*1;
     if (unReadNotification) {
         $.ajax({
-            url: "/social-media/read-notification",
+            url: "/read-notification",
             type: "get",
             success: function (response)
             {
