@@ -176,7 +176,7 @@
 
                                 <form id="regForm">
                                     <!-- STEP 1 -->
-                                    <div class="step-box " id="step1">
+                                    <div class="step-box active" id="step1">
                                         <div>
                                             <picture>
                                                 <img src="{{asset('assets/images/background/5.jpg')}}" alt="">
@@ -216,7 +216,7 @@
                                     </div>
 
                                     <!-- STEP 4 -->
-                                    <div class="step-box active" id="step4">
+                                    <div class="step-box " id="step4">
                                         <h4>What's your gender?</h4>
 
                                         <div class="row mt-3" id="ms_genderGroup">
