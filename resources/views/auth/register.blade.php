@@ -176,7 +176,7 @@
 
                                 <form id="regForm">
                                     <!-- STEP 1 -->
-                                    <div class="step-box active" id="step1">
+                                    <div class="step-box " id="step1">
                                         <div>
                                             <picture>
                                                 <img src="{{asset('assets/images/background/5.jpg')}}" alt="">
@@ -216,37 +216,42 @@
                                     </div>
 
                                     <!-- STEP 4 -->
-                                    <div class="step-box" id="step4">
+                                    <div class="step-box active" id="step4">
                                         <h4>What's your gender?</h4>
 
                                         <div class="row mt-3" id="ms_genderGroup">
                                             <div class="col-12 mb-3">
                                                 <div class="row">
                                                     <div class="col-4">
-                                                        <label class="gender-option flex-fill"><span>Male</span>
-                                                            <input type="radio" name="ms_gender" value="male" data-msg="Select gender">
-                                                        </label>
+                                                        <input type="radio" name="ms_gender" value="male" data-msg="Select gender">
+                                                        <label>Male</label>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <input type="radio" name="ms_gender" value="female" data-msg="Select gender">
+                                                        <label>Female</label>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <input type="radio" name="ms_gender" value="custom" data-msg="Select gender">
+                                                        <label>Other</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {{-- <div class="col-12 mb-3">
+                                                <div class="row">
+                                                    <div class="col-4">
+                                                        <input type="radio" name="ms_gender" value="female" data-msg="Select gender">
+                                                        <label>Female</label>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-12 mb-3">
                                                 <div class="row">
                                                     <div class="col-4">
-                                                        <label class="gender-option flex-fill"><span>Female</span>
-                                                            <input type="radio" name="ms_gender" value="female" data-msg="Select gender">
-                                                        </label>
+                                                        <input type="radio" name="ms_gender" value="custom" data-msg="Select gender">
+                                                        <label>Other</label>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-12 mb-3">
-                                                <div class="row">
-                                                    <div class="col-4">
-                                                        <label class="gender-option flex-fill"><span>Other</span>
-                                                            <input type="radio" name="ms_gender" value="custom" data-msg="Select gender">
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
 
                                         <p class="text-danger" id="ms_genderError"></p>
