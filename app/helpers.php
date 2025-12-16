@@ -140,6 +140,7 @@ if (!function_exists('storeMenuIntoSession')) {
                     ->join('main_menus as b', 'b.id', '=', 'a.menu_id')
                     ->select('b.menu_name','b.route_name','a.permission_string','b.root_menu_id','a.id','a.menu_id')
                     ->where('a.user_id',$user_id)
+                    ->where(['b.status_active'=>1])
                     ->orderBy('b.sequence')
                     ->get();
                 // return $submenus;
@@ -196,6 +197,7 @@ if (!function_exists('storeMenuIntoSession')) {
             {
                 $submenus = DB::table('main_menus','b')
                     ->select('b.menu_name','b.route_name','b.root_menu_id','b.id')
+                    ->where(['b.status_active'=>1])
                     ->where('route_name','!=',null)
                     ->orderBy('b.sequence')
                     ->get();
